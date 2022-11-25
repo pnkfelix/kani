@@ -21,8 +21,6 @@ jobs:
 
       - name: Setup Kani Dependencies
         uses: ./.github/actions/setup
-        with:
-          os: ${{ matrix.os }}
 
       - name: Build Kani
         run: cargo build-dev
