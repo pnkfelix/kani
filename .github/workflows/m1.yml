@@ -1,0 +1,32 @@
+# Copyright Kani Contributors
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+name: Kani CI M1
+on:
+  pull_request:
+  push:
+    # Not just any push, as that includes tags.
+    # We don't want to re-trigger this workflow when tagging an existing commit.
+    branches:
+      - '**'
+
+env:
+  RUST_BACKTRACE: 1
+
+jobs:
+  regression:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Kani
+        uses: actions/checkout@v2
+
+      - name: Setup Kani Dependencies
+        uses: ./.github/actions/setup
+        with:
+          os: ${{ matrix.os }}
+
+      - name: Build Kani
+        run: cargo build-dev
+
+      - name: Execute Kani regression
+        run: ./scripts/kani-regression.sh
+
