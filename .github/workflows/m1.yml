@@ -21,6 +21,8 @@ jobs:
 
       - name: Setup Kani Dependencies
         uses: ./.github/actions/setup
+        with:
+          os: macos-11
 
       - name: Build Kani
         run: cargo build-dev
